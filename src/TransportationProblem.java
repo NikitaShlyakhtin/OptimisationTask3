@@ -20,7 +20,7 @@ public class TransportationProblem {
     }
 
     public void printInputParameterTable() {
-        System.out.println("\n--- Input Parameter Table --- \n");
+        System.out.println("\n--- Input Parameter Table ---");
 
         for (int i = 0; i < C.length; i++) {
             for (int j = 0; j < C[i].length; j++) {
@@ -37,6 +37,7 @@ public class TransportationProblem {
         for (int i = 0; i < D.length; i++) {
             System.out.printf("%4d ", D[i]);
         }
+        System.out.println();
         System.out.println();
     }
 
