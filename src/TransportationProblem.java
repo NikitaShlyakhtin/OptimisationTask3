@@ -2,23 +2,41 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
+/**
+ * The type Transportation problem.
+ */
 public class TransportationProblem {
     private int[] S;
     private int[][] C;
     private int[] D;
 
+    /**
+     * Instantiates a new Transportation problem.
+     *
+     * @param S the source
+     * @param C the cost
+     * @param D the demand
+     */
     public TransportationProblem(int[] S, int[][] C, int[] D) {
         this.S = S;
         this.C = C;
         this.D = D;
     }
 
+    /**
+     * Is balanced boolean.
+     *
+     * @return the boolean
+     */
     public boolean isBalanced() {
         int totalSupply = Arrays.stream(S).sum();
         int totalDemand = Arrays.stream(D).sum();
-        return totalSupply == totalDemand;
+        return totalSupply == totalDemand; // if sum of supply and demand is equal, then the problem is balanced
     }
 
+    /**
+     * Print input parameter table.
+     */
     public void printInputParameterTable() {
         System.out.println("\n--- Input Parameter Table ---");
 
@@ -41,6 +59,16 @@ public class TransportationProblem {
         System.out.println();
     }
 
+    /**
+     * North-west corner method.
+     *
+     * It begins by starting at the top-left (north-west) corner of a transportation matrix
+     * and iteratively allocates shipments based on the available supply and demand at each
+     * point. By moving from the north-west corner to the south-east corner, this method
+     * efficiently provides an initial feasible solution.
+     *
+     * @return the int [ ] [ ]
+     */
     public int[][] northWestCornerMethod() {
         int i = 0, j = 0;
         int[][] allocation = new int[S.length][D.length];
@@ -66,6 +94,17 @@ public class TransportationProblem {
         return allocation;
     }
 
+    /**
+     * Vogel's approximation method.
+     *
+     * Unlike simpler methods like the North-West Corner, Vogel's approximation method (VAM)
+     * considers both the costs of shipping and the differences between the lowest costs in
+     * each row and column of the transportation matrix. By prioritizing the allocation of
+     * goods to the most cost-sensitive cells, VAM aims to create an initial feasible solution
+     * that is often closer to the optimal solution compared to more basic methods.
+     *
+     * @return the int [ ] [ ]
+     */
     public int[][] vogelsApproximationMethod() {
         int[] S_copy = Arrays.copyOf(S, S.length);
         int[] D_copy = Arrays.copyOf(D, D.length);
@@ -160,6 +199,7 @@ public class TransportationProblem {
         return result;
     }
 
+    // Same check for balance of problem
     private boolean isFullyAllocated() {
         return Arrays.stream(S).sum() == 0 && Arrays.stream(D).sum() == 0;
     }
@@ -217,6 +257,18 @@ public class TransportationProblem {
         return new int[] { maxPenaltyIndexI, maxPenaltyIndexJ };
     }
 
+    /**
+     * Russell's approximation method.
+     *
+     * This method begins with the identification of a basic feasible solution by
+     * allocating shipments based on specific criteria. Russell's method then proceeds
+     * to check for optimality conditions and iteratively improves the solution until
+     * an optimal result is achieved. Though not always guaranteeing the best solution,
+     * Russell's approximation method provides a solid starting point for addressing
+     * transportation problems efficiently.
+     *
+     * @return the int [ ] [ ]
+     */
     public int[][] russellsApproximationMethod() {
         int numSources = S.length;
         int numDestinations = D.length;

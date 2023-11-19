@@ -2,15 +2,26 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
+/**
+ * The type Transportation problem test.
+ */
 public class TransportationProblemTest {
+    /**
+     * The Supply.
+     */
     int[] S;
+    /**
+     * The Cost.
+     */
     int[][] C;
+    /**
+     * The Demand.
+     */
     int[] D;
 
+    /**
+     * Init.
+     */
     @Before
     public void init() {
         S = new int[]{7, 9, 18};
@@ -22,6 +33,9 @@ public class TransportationProblemTest {
         D = new int[]{5, 8, 7, 14};
     }
 
+    /**
+     * Test North-west corner method.
+     */
     @Test
     public void testNorthWestCornerMethod() {
         TransportationProblem tp = new TransportationProblem(S, C, D);
@@ -29,6 +43,9 @@ public class TransportationProblemTest {
         Assert.assertArrayEquals(new int[][] {{5, 2, 0, 0}, {0, 6, 3, 0}, {0, 0, 4, 14}}, tp.northWestCornerMethod());
     }
 
+    /**
+     * Test Vogel's approximation method.
+     */
     @Test
     public void testVogelsApproximationMethod() {
         TransportationProblem tp = new TransportationProblem(S, C, D);
@@ -36,6 +53,9 @@ public class TransportationProblemTest {
         Assert.assertArrayEquals(new int[][] {{5, 0, 0, 2}, {0, 0, 7, 2}, {0, 8, 0, 10}}, tp.vogelsApproximationMethod());
     }
 
+    /**
+     * Test Russell's approximation method.
+     */
     @Test
     public void testRussellsApproximationMethod() {
         TransportationProblem tp = new TransportationProblem(S, C, D);
@@ -43,8 +63,11 @@ public class TransportationProblemTest {
         Assert.assertArrayEquals(new int[][] {{5, 2, 0, 0}, {0, 2, 7, 0}, {0, 4, 0, 14}}, tp.russellsApproximationMethod());
     }
 
+    /**
+     * Test on unbalanced.
+     */
     @Test
-    public void testUnballanced() {
+    public void testUnbalanced() {
         int[] S = {5, 5};
         int[][] C = {
                 {1, 2, 3},
