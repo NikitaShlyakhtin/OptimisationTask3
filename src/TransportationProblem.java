@@ -225,7 +225,6 @@ public class TransportationProblem {
             int[] maxOpportunityCostIndex = findMaxOpportunityCostIndex();
             int i = maxOpportunityCostIndex[0];
             int j = maxOpportunityCostIndex[1];
-
             int quantity = Math.min(S[i], D[j]);
             result[i][j] = quantity;
 
@@ -234,13 +233,13 @@ public class TransportationProblem {
 
             if (S[i] == 0) {
                 for (int k = 0; k < numDestinations; k++) {
-                    C[i][k] = Integer.MAX_VALUE;
+                    C[i][k] = Integer.MIN_VALUE;
                 }
             }
 
             if (D[j] == 0) {
                 for (int k = 0; k < numSources; k++) {
-                    C[k][j] = Integer.MAX_VALUE;
+                    C[k][j] = Integer.MIN_VALUE;
                 }
             }
         }
@@ -249,7 +248,7 @@ public class TransportationProblem {
     }
 
     private int[] findMaxOpportunityCostIndex() {
-        int maxOpportunityCost = -1;
+        int minOpportunityCost = Integer.MAX_VALUE;
         int maxOpportunityCostIndexI = -1;
         int maxOpportunityCostIndexJ = -1;
 
@@ -257,8 +256,8 @@ public class TransportationProblem {
             for (int j = 0; j < C[i].length; j++) {
                 if (S[i] > 0 && D[j] > 0) {
                     int opportunityCost = C[i][j] - findMinInRowAndColumn(i, j);
-                    if (opportunityCost > maxOpportunityCost) {
-                        maxOpportunityCost = opportunityCost;
+                    if (opportunityCost < minOpportunityCost) {
+                        minOpportunityCost = opportunityCost;
                         maxOpportunityCostIndexI = i;
                         maxOpportunityCostIndexJ = j;
                     }
@@ -270,9 +269,9 @@ public class TransportationProblem {
     }
 
     private int findMinInRowAndColumn(int row, int column) {
-        int minInRow = Arrays.stream(C[row]).min().getAsInt();
-        int minInColumn = IntStream.range(0, C.length).map(i -> C[i][column]).min().getAsInt();
-        return Math.min(minInRow, minInColumn);
+        int maxInRow = Arrays.stream(C[row]).max().getAsInt();
+        int maxInColumn = IntStream.range(0, C.length).map(i -> C[i][column]).max().getAsInt();
+        return maxInRow + maxInColumn;
     }
 
 }
